@@ -7,7 +7,7 @@
 
 Возвращает список петиций.
 
-**REQ:  GET /petition**
+**REQ:  GET /petitions**
 
 **RESP:  200 Content-Type: application/hal+json**
 
@@ -21,7 +21,7 @@
 		}
 	],
 	"_links": {
-		"self": "/petition"
+		"self": "/petitions"
 	}
 }
 ```
@@ -81,8 +81,8 @@
 	"amount_yes": "100",
 	"amount_no": "10",
 	"_links": {
-		"self": "/petition/123/result",
-		"petition": "/petition/123"
+		"self": "/petition/{id}/result",
+		"petition": "/petition/{id}"
 	}
 }
 ```
