@@ -3,7 +3,7 @@
 
 Выбран REST подход.
 
-1)**Получение списка петиций.**
+**1) Получение списка петиций.**
 
 Возвращает список петиций.
 
@@ -13,20 +13,20 @@
 
 ```json
 {
-	"_links": {
-		"self": "/petition"
-	},
 	"petitions": [{
 			"title": "petition title",
 			"_links": {
 				"self": "/petition/{id}"
 			}
 		}
-	]
+	],
+	"_links": {
+		"self": "/petition"
+	}
 }
 ```
 
-2)**Получение петиции по id.**
+**2) Получение петиции по id.**
 
 Возвращает заголовок и текст петиции, а так же даты создания и окончания сбора подписей
 
@@ -40,28 +40,30 @@
 	"creation_date": "20/10/2010",
 	"expiry_date": "20/11/2010",
 	"_links": {
-		"self": "/petition/123",
-		"vote": "/petition/123/vote"
+		"self": "/petition/{id}",
+		"vote": "/petition/{id}/vote",
+		"all": "/petition/"
 	}
 }
 ```
 
-3)**Добавление своей загадки.**
+**3) Добавление своей загадки.**
 
 Принимает текст загадки, возможные ответы и верный ответ. Возвращает ссылку на созданную загадку.
 
 **REQ: POST /petition**
 
-**RESP:  201 Location: /petition/{id}**
 ```json
 {
 	"title": "petition title",
 	"text": "petition text",
-	"expiry_date": "expiry date"
+	"expiry_date": "expiry date",
 }
 ```
+**RESP:  201 Location: /petition/{id}**
 
-4)**Проголосовать.** 
+**
+4) Проголосовать.** 
 
 Если согласен в петицией, то choice = true, если не согласен -- choice = false. Возвращает заголовок петиции в поле title, дату окончания сбора подписей в поле expiry_date, количество согласных с петицией в поле amount_yes, количество сесогласных в поле amount_no.
 
