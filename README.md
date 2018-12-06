@@ -1,87 +1,76 @@
-# web_arch
-Сервис петиций. Хранилище петиций с возможностью просмотра, добавления и голосования. Пользователь может просмотреть список петиций, проголосовать за или против, увидеть состояние петиции. Петиция состоит из названия, текста петиции, даты создания, даты окончания голосования. числа проголосовавших.
+# Advice service
+Сервис радномных советов в определенных ситуациях. Хранилище советов, с возможность выбора ситуации и получения рандомного совета. ПРисутствует возможность добавления советов для разных ситуаций. Совет представляет из себе совет и ситуацию, к которой омжет быть применим.
 
 Выбран REST подход.
 
-**1) Получение списка петиций.**
+**1) Получение списка ситуаций.**
 
-Возвращает список петиций.
+Возвращает список ситуаций(проблем), в которых человеку нужен совет.
 
-**REQ:  GET /petitions**
+**REQ:  GET /advices**
 
 **RESP:  200 Content-Type: application/hal+json**
 
 ```json
 {
-	"petitions": [{
-			"title": "petition title",
+	"challenges": [{
+			"title": "challenge title",
 			"_links": {
-				"self": "/petition/{id}"
+				"self": "/advices/{challenge_id}"
 			}
 		}
 	],
 	"_links": {
-		"self": "/petitions"
+		"self": "/advices"
 	}
 }
 ```
 
-**2) Получение петиции по id.**
+**2) Получение рандомного совета по выбранной проблеме.**
 
-Возвращает заголовок и текст петиции, а так же даты создания и окончания сбора подписей
+Возвращает один из советов к выбранной проблеме
 
-**REQ:  GET /petition/{id}**
+**REQ:  GET /advices/{challenge_id}**
 
 **RESP:  200 Content-Type: application/hal+json**
 ```json
 {
-	"title": "petition title",
-	"text": "petition text",
-	"creation_date": "20/10/2010",
-	"expiry_date": "20/11/2010",
+	"challenge": "challenge title",
+	"advice_text": "advice text",
 	"_links": {
-		"self": "/petition/{id}",
-		"vote": "/petition/{id}/vote",
-		"all": "/petition/"
+		"self": "/advices/{challenge_id}",
+		"advice": "advice/{challenge_id}/{advice_id}",
+		"new_advice": "/advices/{challenge_id}/new"
 	}
 }
 ```
 
-**3) Добавление своей загадки.**
+**4) Добавление своего совета для проблемы.**
 
-Принимает текст загадки, возможные ответы и верный ответ. Возвращает ссылку на созданную загадку.
+Принимает текст проблемы.
 
-**REQ: POST /petition**
+**REQ: POST /advices/{challenge_id}/new**
 
 ```json
 {
-	"title": "petition title",
-	"text": "petition text",
-	"expiry_date": "expiry date",
+	"advice_text": "advice text"
 }
 ```
-**RESP:  201 Location: /petition/{id}**
+**RESP:  201 Location: /advices/{challenge_id}/{advice_id}**
 
-**4) Проголосовать.** 
+**4) Получение совета по проблеме и id.** 
 
-Если согласен в петицией, то choice = true, если не согласен -- choice = false. Возвращает заголовок петиции в поле title, дату окончания сбора подписей в поле expiry_date, количество согласных с петицией в поле amount_yes, количество сесогласных в поле amount_no.
+При добавлении своего совета пользователю будет возвращаться ссылка на этот совет. Так же может быть использовано, если клиент будет поддерживать сохранение понравившихся советов.
 
-**REQ: POST /petition/{id}/vote**
-```json
-{
-	"choice": true
-}
-```
+**REQ: GET /advices/{challenge_id}/{advice_id}**
+
 **RESP: 200 Content-Type: application/hal+json**
 ```json
 {
-	"title": "title",
-	"expiry_date": "expiry_date",
-	"amount_yes": "100",
-	"amount_no": "10",
+	"advice_text": "advice_text",
 	"_links": {
-		"self": "/petition/{id}/result",
-		"petition": "/petition/{id}"
+		"self": "/advices/{challenge_id}/{advice_id}",
+		"random_advice": "/advices/{challenge_id}"
 	}
 }
 ```
