@@ -14,7 +14,7 @@
 ```json
 {
 	"challenges": [{
-			"title": "challenge title",
+			"challenge_title": "challenge title",
 			"_links": {
 				"self": "/advices/{challenge_id}"
 			}
@@ -36,7 +36,7 @@
 ```json
 {
 	"challenge_id": "challenge id",
-	"challenge": "challenge title",
+	"challenge_title": "challenge title",
 	"advice_text": "advice text",
 	"_links": {
 		"self": "/advices/{challenge_id}",
