@@ -35,7 +35,6 @@
 **RESP:  200 Content-Type: application/hal+json**
 ```json
 {
-	"challenge_id": "challenge id",
 	"challenge_title": "challenge title",
 	"advice_text": "advice text",
 	"_links": {
@@ -51,6 +50,7 @@
 Принимает текст ситуации (проблемы).
 
 **REQ: POST /advices/{challenge_id}/new**
+content-type: application/json 
 
 ```json
 {
