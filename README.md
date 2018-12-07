@@ -35,6 +35,7 @@
 **RESP:  200 Content-Type: application/hal+json**
 ```json
 {
+	"challenge_id": "challenge id",
 	"challenge": "challenge title",
 	"advice_text": "advice text",
 	"_links": {
